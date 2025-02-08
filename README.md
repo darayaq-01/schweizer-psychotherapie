@@ -1,0 +1,1 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9b3e454a-9c78-4e34-9465-438462e2a264/deploy-status)](https://app.netlify.com/sites/schweizer-psychotherapie/deploys)
