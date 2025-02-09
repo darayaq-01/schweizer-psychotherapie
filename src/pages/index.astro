@@ -1,8 +1,32 @@
 ---
-import Layout from '../layouts/Layout.astro';
+// import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import Logo from '@assets/logo/logo.webp';
+import BaseHead from '@components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from 'src/consts';
+import Line from '@components/ui/Line.astro';
 ---
 
-<Layout>
-    <h1 class='uppercase'>Erika Schweizer</h1>
-    <p>Hier</p>
-</Layout>
+<!doctype html>
+<html lang='en'>
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body class='justify-items-center'>
+        <main class='p-8 h-screen'>
+            <div class='mb-6'>
+                <Image src={Logo} alt='Logo' class='mx-auto w-36' />
+            </div>
+            <Line />
+            <Line />
+            <div class='grid place-items-center h-[calc(100%-16rem)]'>
+                <p
+                    class='text-2xl text-es-gray text-center max-w-[40ch] mx-auto'
+                >
+                    HIER ENTSTEHT DIE NEUE INTERNETSEITE VON ERIKA SCHWEIZER.
+                </p>
+            </div>
+            <Line color='bottom-16 ' />
+        </main>
+    </body>
+</html>

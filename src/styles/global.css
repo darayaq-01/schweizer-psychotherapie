@@ -1,1 +1,38 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-es-logo-primary: #41758a;
+  --color-es-logo-secondary: rgb(198,172,147);
+  --color-es-primary: #7198ac;
+  --color-es-gray: rgba(0,0,0,60%);
+  --color-es-white: #cabeda;
+  --font-univers-regular: "UniversRegular", sans-serif;
+  --font-univers-bold: "UniversBold", sans-serif;
+  --font-univers-condensed: "UniversCondensed", sans-serif;
+}
+
+@font-face {
+  font-family: "UniversRegular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/public/fonts/UniversLTStd.woff") format("woff");
+}
+
+@font-face {
+  font-family: "UniversBold";
+  font-style: bold;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/public/fonts/UniversLTStd-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "UniversCondensed";
+  font-style: bold condensed;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/public/fonts/UniversLTStd-BoldCn.woff") format("woff");
+}
+
