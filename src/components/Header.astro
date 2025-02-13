@@ -1,0 +1,37 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { Image } from 'astro:assets';
+import Logo from '@assets/logo/logo.webp';
+
+const menusItems = [
+    { href: '/ueber-mich', text: 'Über mich' },
+    { href: '/leistungen', text: 'Leistungen' },
+    { href: '/kontakt', text: 'Kontakt' },
+    { href: '/termine', text: 'Termine' },
+    { href: '/anfahrt', text: 'Anfahrt' },
+];
+---
+
+<header class=''>
+    <nav class='flex flex-col'>
+        <a href='/' aria-label='Züruck zur Startseite'>
+            <Image
+                src={Logo}
+                alt='Logo Erika Schweizer'
+                class='aspect-square h-32 w-auto'
+            />
+        </a>
+
+        <div
+            class='md:flex hidden flex-col md:flex-row gap-8 border-es-primary border-y py-2 my-8'
+        >
+            {
+                menusItems.map((item) => (
+                    <HeaderLink href={item.href} class='text-lg uppercase'>
+                        {item.text}
+                    </HeaderLink>
+                ))
+            }
+        </div>
+    </nav>
+</header>
