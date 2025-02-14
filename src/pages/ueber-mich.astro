@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
+import ImgeEirka from '@assets/logo/logo.webp';
+import Container from '@components/Container.astro';
+---
+
+<Layout title='Über mich' description='Erika Schweizer - Psychoterapeuten'>
+    <Container
+        title='LOREM IPSUM DOLOR SIT AMET'
+        className='flex flex-col md:flex-row'
+    >
+        <figure class='border border-red-700'>
+            <Image src={ImgeEirka} alt='image' class='w-full' />
+        </figure>
+        <div class='prose'>
+            <p>
+                Herzlich Willkommen At aboritatem rem voluptam quis sit laut
+                voluptatur, omnis ipsa per oritas molorro repero quo comnis ius,
+                quia dolorest, Itatur, aut officit, simpe nost, ad mi, nonseque
+                nullaute nonse ipsame nonem volecus.
+            </p>
+            <p>
+                Ximus quaecul latios et et omnis si sum quam int volorum seque
+                veliatiur? Anda et que rerum es dis illibus, ut laborem. Ipsaern
+                atenti nonsequi dolo vel eliaectum et acerrovit, comniae labo.
+                At rehent imus.
+            </p>
+            <p>
+                Omnitae et ent et maximus, et ma doluptur maio. Olupti aut reium
+                cusdae pres re volo- ris et ellissim quia del mo ipsam, sant
+                facea volor molorep tatat. Ut vel ipsunt dolupturibus dit lamus
+                sam imagniae velitatum vero ma voluptionse pa- ruptatibus
+                expediaspedi cuptur maiorem qui ullam, quam fugiat ersped
+                molorpos aut
+            </p>
+        </div>
+    </Container>
+</Layout>

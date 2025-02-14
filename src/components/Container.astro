@@ -1,0 +1,14 @@
+---
+interface ContainerProps {
+    title: string;
+    className?: string;
+}
+const { title, className } = Astro.props as ContainerProps;
+---
+
+<article>
+    <h1 class='my-4'>{title}</h1>
+    <div class:list={[' w-[80%] justify-center gap-6 mt-8', className]}>
+        <slot />
+    </div>
+</article>

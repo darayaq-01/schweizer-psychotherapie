@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+@layer base {
+  :root{
+    font-family: var(--font-univers-regular), sans-serif;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-family: var(--font-univers-bold), sans-serif;
+    font-size: 2em;
+    color: var(--color-es-logo-primary);
+  }
+}
+
+@layer components {
+
+}
+
 @theme {
   --color-es-logo-primary: #41758a;
   --color-es-logo-secondary: rgb(198,172,147);
@@ -13,26 +28,28 @@
 }
 
 @font-face {
-  font-family: "UniversRegular";
+  font-family: 'UniversBold';
+  src: url('/fonts/universltstd-bold-webfont.woff2') format('woff2'),
+       url('/fonts/universltstd-bold-webfont.woff') format('woff');
+  font-weight: normal;
   font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/public/fonts/UniversLTStd.woff") format("woff");
+
 }
 
 @font-face {
-  font-family: "UniversBold";
-  font-style: bold;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/public/fonts/UniversLTStd-Bold.woff") format("woff");
+  font-family: 'UniversCondensed';
+  src: url('/fonts/universltstd-boldcn-webfont.woff2') format('woff2'),
+       url('/fonts/universltstd-boldcn-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
 
 @font-face {
-  font-family: "UniversCondensed";
-  font-style: bold condensed;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/public/fonts/UniversLTStd-BoldCn.woff") format("woff");
-}
+  font-family: 'UniversRegular';
+  src: url('/fonts/universltstd-webfont.woff2') format('woff2'),
+       url('/fonts/universltstd-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 
+}
