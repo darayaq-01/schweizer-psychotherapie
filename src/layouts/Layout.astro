@@ -1,17 +1,22 @@
 ---
 import BaseHead from '@components/BaseHead.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from 'src/consts';
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='de'>
     <head>
         <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     </head>
-    <body class='relative min-h-screen bg-non-white'>
-        <div class=''></div>
-        <main>
+    <body
+        class='relative min-h-screen bg-es-white p-8 md:mx-auto md:max-w-[1400px] flex flex-col'
+    >
+        <Header />
+        <main class='grow'>
             <slot />
         </main>
+        <Footer />
     </body>
 </html>
