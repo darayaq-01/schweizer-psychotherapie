@@ -1,0 +1,72 @@
+---
+// Sidebar.astro
+import TimifyModal from './TimifyModal.astro';
+import Calendar from '@components/ui/Calendar.astro';
+import Phone from '@components/ui/Phone.astro';
+
+const phoneNumber = '+34123456789';
+const timifyAccountId = import.meta.env.TIMIFY_ACCOUNT_ID;
+---
+
+<aside class='fixed right-0 top-1/2 -translate-y-1/2 flex flex-col gap-4'>
+    <button
+        id='openTimifyButton'
+        class='flex flex-col items-start bg-es-logo-primary/70 rounded-l-lg p-2 hover:bg-es-logo-primary transition-colors group cursor-pointer'
+        aria-label='Open calendar'
+    >
+        <span class='text-xs text-white font-bold mb-1 uppercase'>Termine</span>
+
+        <Calendar />
+    </button>
+
+    <a
+        href={`tel:${phoneNumber}`}
+        class='flex flex-col items-center rounded-l-lg p-2 bg-es-logo-primary/70 hover:bg-es-logo-primary transition-colors group'
+        aria-label='Make a phone call'
+    >
+        <span class='text-xs text-white mb-1 text-bold uppercase'>Telefon</span>
+        <Phone />
+    </a>
+</aside>
+
+<TimifyModal accountId={timifyAccountId} />
+
+<script>
+    function toggleModal(show: boolean) {
+        const modal = document.getElementById('timifyModal');
+        if (modal) {
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+        }
+    }
+
+    // Event Listeners
+    const openButton = document.getElementById('openTimifyButton');
+    const closeButton = document.getElementById('closeTimifyModal');
+    const modal = document.getElementById('timifyModal');
+
+    openButton?.addEventListener('click', () => toggleModal(true));
+
+    closeButton?.addEventListener('click', () => toggleModal(false));
+
+    // Close modal out of the content
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            toggleModal(false);
+        }
+    });
+
+    // Close modal with escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            toggleModal(false);
+        }
+    });
+</script>

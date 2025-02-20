@@ -1,0 +1,50 @@
+---
+interface Props {
+    accountId: string;
+}
+
+const { accountId } = Astro.props;
+
+const bookingUrl = new URL('https://book.timify.com/');
+bookingUrl.searchParams.set('accountId', accountId);
+bookingUrl.searchParams.set('hideCloseButton', 'true');
+bookingUrl.searchParams.set('locale', 'de-De');
+bookingUrl.searchParams.set('services', 'all');
+bookingUrl.searchParams.set('view', 'calendar');
+---
+
+<div
+    id='timifyModal'
+    class='fixed inset-0 bg-black/50 hidden items-center justify-center z-50'
+>
+    <div
+        class='bg-white w-fit max-w-4xl h-[50%] rounded-lg relative flex flex-col overflow-hidden'
+    >
+        <button
+            id='closeTimifyModal'
+            class='absolute right-4 top-4 text-gray-300 hover:text-white z-50 cursor-pointer'
+            aria-label='Cerrar modal'
+        >
+            <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class='h-6 w-6'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+            >
+                <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M6 18L18 6M6 6l12 12'></path>
+            </svg>
+        </button>
+        <iframe
+            src={bookingUrl.toString()}
+            class='w-full h-full border-none'
+            title='Booking system'
+            allow='fullscreen'
+            referrerpolicy='origin'
+            loading='lazy'></iframe>
+    </div>
+</div>
