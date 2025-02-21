@@ -3,6 +3,7 @@ import BaseHead from '@components/BaseHead.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from 'src/consts';
+import Sidebar from '@components/Sidebar.astro';
 ---
 
 <!doctype html>
@@ -17,6 +18,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from 'src/consts';
         <main class='grow'>
             <slot />
         </main>
+        <Sidebar />
         <Footer />
     </body>
 </html>
