@@ -4,21 +4,33 @@ import type { HTMLAttributes } from 'astro/types';
 type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
+
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+const subpath = pathname.match(/[^\/]+(?=\/?)/g);
+
+const cleanUrl = (url: string) => {
+    return url.split('#')[0].replace(/\/$/, '');
+};
+
+const currentPath = cleanUrl(pathname);
+const linkPath = cleanUrl(href?.toString() ?? '');
+
+const isActive =
+    linkPath === currentPath || linkPath === '/' + (subpath?.[0] || '');
 ---
 
 <a
     href={href}
-    class:list={[className, 'text-es-gray', { active: isActive }]}
+    class:list={[className, 'transition-colors', { active: isActive }]}
     {...props}
 >
     <slot />
 </a>
+
 <style>
     a {
         display: inline-block;
+        color: var(--color-es-gray);
     }
     a.active {
         color: var(--color-es-primary);
