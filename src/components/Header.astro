@@ -1,23 +1,33 @@
 ---
-import HeaderLink from './HeaderLink.astro';
 import { Image } from 'astro:assets';
+import HeaderLink from './HeaderLink.astro';
 import Logo from '@assets/logo/logo.webp';
 
 const menusItems = [
     { href: '/ueber-mich', text: 'Über mich' },
-    { href: '/leistungen', text: 'Leistungen' },
+    {
+        text: 'Leistungen',
+        isDropdown: true, // Agregamos esta propiedad para identificar dropdowns
+        items: [
+            { text: 'Leistungen 1', href: '/leistungen/#leistungen1' },
+            { text: 'Leistungen 2', href: '/leistungen/#leistungen2' },
+            { text: 'Leistungen 3', href: '/leistungen/#leistungen3' },
+            { text: 'Leistungen 4', href: '/leistungen/#leistungen4' },
+        ],
+    },
     { href: '/kontakt', text: 'Kontakt' },
     { href: '/termine', text: 'Termine' },
     { href: '/anfahrt', text: 'Anfahrt' },
 ];
+const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
 ---
 
-<header class=''>
+<header>
     <nav class='flex flex-col'>
-        <a href='/' aria-label='Züruck zur Startseite'>
+        <a href='/' aria-label='Volver al inicio'>
             <Image
-                src={Logo}
-                alt='Logo Erika Schweizer'
+                src={Logo || '/placeholder.svg'}
+                alt='Logo'
                 class='aspect-auto object-cover h-32 w-auto'
             />
         </a>
@@ -26,11 +36,41 @@ const menusItems = [
             class='md:flex hidden flex-col md:flex-row gap-8 border-es-primary border-y py-2 my-8'
         >
             {
-                menusItems.map((item) => (
-                    <HeaderLink href={item.href} class='text-lg uppercase'>
-                        {item.text}
-                    </HeaderLink>
-                ))
+                menusItems.map((item) =>
+                    item.isDropdown ? (
+                        <div class='relative group'>
+                            <button
+                                class:list={[
+                                    'text-lg uppercase focus:outline-none transition-colors',
+                                    'text-es-gray hover:text-es-primary',
+                                    {
+                                        'text-es-primary':
+                                            isInLeistungenSection,
+                                    },
+                                ]}
+                            >
+                                {item.text}
+                            </button>
+
+                            <div class='hidden group-hover:block absolute top-full left-0 bg-white shadow-lg min-w-[200px] z-50'>
+                                <div class='py-2'>
+                                    {item.items.map((subItem) => (
+                                        <HeaderLink
+                                            href={subItem.href}
+                                            class='block px-6 py-2 text-es-gray hover:text-es-primary hover:underline hover:underline-offset-8'
+                                        >
+                                            {subItem.text}
+                                        </HeaderLink>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <HeaderLink href={item.href} class='text-lg uppercase'>
+                            {item.text}
+                        </HeaderLink>
+                    )
+                )
             }
         </div>
     </nav>
