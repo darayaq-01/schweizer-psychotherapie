@@ -4,5 +4,72 @@ import Container from '@components/Container.astro';
 ---
 
 <Layout title='Kontakt' description='Erika Schweizer - Psychoterapeuten'>
-    <Container title='Kontakt' className='' />
+    <Container title='Kontakt' className=''>
+        <p>
+            Praxis für Psychotherapie Erika Schweizer Heilpraktikerin für
+            Psychotherapie (HPG)
+        </p>
+        <p>
+            Professor-Huber-Straße 1, 82008 Unterhaching, Tel: 089 18910330,
+            Mail: lorem@ipsum.de
+        </p>
+
+        <section>
+            <p>form --------------------------</p>
+        </section>
+        <section>
+            <h3>Die Anfahrt mit den öffentlichen Verkehrsmitteln:</h3>
+            <p>
+                Praxis für Psychotherapie Erika Schweizer,
+                Professor-Huber-Straße 1, 82008 Unterhaching
+            </p>
+            <p>
+                Die U-Bahnhaltestelle „xxxx“ ist wenige Gehminuten von der
+                Praxis entfernt.
+            </p>
+            <ul>
+                <li>U-Bahn Linie Ux oder Ux, Haltestelle: xxxx</li>
+                <li>Bus Linie xx, Haltestelle: xxxx</li>
+            </ul>
+
+            <p>www.mvv-muenchen.de</p>
+
+            <h3>Die Anfahrt mit dem Auto:</h3>
+
+            <p>Parkplätze lorem ipsum.</p>
+            <ul>
+                <li>
+                    vero ma voluptionse paruptatibus expediaspedi cuptur maiorem
+                </li>
+                <li>
+                    qui ullam, quam fugiat ersped molorpos aut la pliqui blaut
+                    dolestis deriaturepe
+                </li>
+            </ul>
+
+            <p>map</p>
+        </section>
+        <form name='contact' method='POST' data-netlify='true'>
+            <p>
+                <label>Your Name: <input type='text' name='name' /></label>
+            </p>
+            <p>
+                <label>Your Email: <input type='email' name='email' /></label>
+            </p>
+            <p>
+                <label
+                    >Your Role: <select name='role[]' multiple>
+                        <option value='leader'>Leader</option>
+                        <option value='follower'>Follower</option>
+                    </select></label
+                >
+            </p>
+            <p>
+                <label>Message: <textarea name='message'></textarea></label>
+            </p>
+            <p>
+                <button type='submit'>Send</button>
+            </p>
+        </form>
+    </Container>
 </Layout>
