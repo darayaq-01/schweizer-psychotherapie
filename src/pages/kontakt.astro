@@ -14,8 +14,49 @@ import Container from '@components/Container.astro';
             Mail: lorem@ipsum.de
         </p>
 
-        <section>
-            <p>form --------------------------</p>
+        <section class='my-8'>
+            <form
+                name='kontakt'
+                method='POST'
+                data-netlify='true'
+                class='flex flex-col gap-4 prose'
+            >
+                <input
+                    type='text'
+                    name='name'
+                    class='shadow shadow-gray-200 rounded bg-white text-es-gray py-2 px-4'
+                    placeholder='*Vorname Nachname'
+                    required
+                    maxlength='30'
+                    minlength='3'
+                />
+
+                <input
+                    type='email'
+                    name='email'
+                    class='shadow shadow-gray-200 rounded bg-white text-es-gray py-2 px-4'
+                    placeholder='*E-Mail-Adresse'
+                    required
+                    maxlength='30'
+                    minlength='6'
+                />
+
+                <textarea
+                    name='message'
+                    class='shadow shadow-gray-200 rounded bg-white text-es-gray py-2 px-4'
+                    placeholder='*Nachricht'
+                    required
+                    maxlength='500'
+                    minlength='50'
+                >
+                </textarea>
+
+                <button
+                    type='submit'
+                    class='uppercase bg-es-logo-primary/80 hover:bg-es-logo-primary rounded text-white cursor-pointer px-4 py-2 max-w-fit'
+                    >Absenden</button
+                >
+            </form>
         </section>
         <section>
             <h3>Die Anfahrt mit den öffentlichen Verkehrsmitteln:</h3>
@@ -49,27 +90,5 @@ import Container from '@components/Container.astro';
 
             <p>map</p>
         </section>
-        <form name='contact' method='POST' data-netlify='true'>
-            <p>
-                <label>Your Name: <input type='text' name='name' /></label>
-            </p>
-            <p>
-                <label>Your Email: <input type='email' name='email' /></label>
-            </p>
-            <p>
-                <label
-                    >Your Role: <select name='role[]' multiple>
-                        <option value='leader'>Leader</option>
-                        <option value='follower'>Follower</option>
-                    </select></label
-                >
-            </p>
-            <p>
-                <label>Message: <textarea name='message'></textarea></label>
-            </p>
-            <p>
-                <button type='submit'>Send</button>
-            </p>
-        </form>
     </Container>
 </Layout>
