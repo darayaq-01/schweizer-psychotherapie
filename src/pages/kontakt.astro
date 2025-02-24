@@ -11,7 +11,12 @@ import Container from '@components/Container.astro';
         </p>
         <p>
             Professor-Huber-Straße 1, 82008 Unterhaching, Tel: 089 18910330,
-            Mail: lorem@ipsum.de
+            Mail: <a
+                href='mailto:info@schweizer-psychotherapie.de'
+                class='underline hover:text-es-logo-primary'
+            >
+                info@schweizer-psychotherapie.de
+            </a>
         </p>
 
         <section class='my-8'>
@@ -51,6 +56,19 @@ import Container from '@components/Container.astro';
                 >
                 </textarea>
 
+                <label for='datenschutz' class='flex gap-2 self-baseline'>
+                    <input
+                        type='checkbox'
+                        name='datenschutz'
+                        required
+                        class=''
+                        required
+                    />
+                    Ich habe die Datenschutzerklärung gelesen und akzeptiere sie.
+                </label>
+
+                <div data-netlify-recaptcha='true'></div>
+
                 <button
                     type='submit'
                     class='uppercase bg-es-logo-primary/80 hover:bg-es-logo-primary rounded text-white cursor-pointer px-4 py-2 max-w-fit'
@@ -58,7 +76,7 @@ import Container from '@components/Container.astro';
                 >
             </form>
         </section>
-        <section>
+        <!-- <section>
             <h3>Die Anfahrt mit den öffentlichen Verkehrsmitteln:</h3>
             <p>
                 Praxis für Psychotherapie Erika Schweizer,
@@ -89,6 +107,6 @@ import Container from '@components/Container.astro';
             </ul>
 
             <p>map</p>
-        </section>
+        </section> -->
     </Container>
 </Layout>
