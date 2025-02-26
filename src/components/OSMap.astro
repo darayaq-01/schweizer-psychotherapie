@@ -1,0 +1,93 @@
+---
+interface Props {
+    coordinates?: [number, number];
+    zoom?: number;
+    containerClass?: string;
+}
+
+const DEFAULT_COORDINATES: [number, number] = [51.340468, 12.374739]; // Leipzig
+const DEFAULT_ZOOM = 16; // Zoom level 0-20
+const OSM_BASE_URL = 'https://www.openstreetmap.org';
+
+const {
+    coordinates = DEFAULT_COORDINATES,
+    zoom = DEFAULT_ZOOM,
+    containerClass = 'max-w-2xl  my-8',
+} = Astro.props as Props;
+
+// Validate coordinates
+const [lat, lng] = coordinates.map(Number);
+const isValidCoordinates = Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
+
+// Calculate bounding box using zoom level
+const zoomFactor = 0.5 / 2 ** zoom;
+const bbox = [
+    lng - zoomFactor, // minLon
+    lat - zoomFactor, // minLat
+    lng + zoomFactor, // maxLon
+    lat + zoomFactor, // maxLat
+].join(',');
+
+// Build URLs
+const embedUrl = new URL(`${OSM_BASE_URL}/export/embed.html`);
+embedUrl.searchParams.set('bbox', bbox);
+embedUrl.searchParams.set('marker', `${lat},${lng}`);
+embedUrl.searchParams.set('layer', 'mapnik');
+
+const fullMapUrl = new URL(OSM_BASE_URL);
+fullMapUrl.searchParams.set('mlat', lat.toString());
+fullMapUrl.searchParams.set('mlon', lng.toString());
+fullMapUrl.hash = `map=${zoom}/${lat}/${lng}`;
+---
+
+<div class:list={[containerClass, 'shadow-lg rounded-lg overflow-hidden']}>
+    {
+        isValidCoordinates ? (
+            <>
+                <iframe
+                    class='w-full h-96 border-0'
+                    title='Store Location'
+                    src={embedUrl.toString()}
+                    loading='lazy'
+                    allowfullscreen
+                    referrerpolicy='no-referrer-when-downgrade'
+                    aria-label='Interactive map showing store location'
+                />
+
+                <footer class='bg-gray-100 py-2 text-center'>
+                    <a
+                        class='text-es-logo-primary/80 hover:text-es-logo-primary transition-colors duration-200 text-sm inline-flex items-center justify-center gap-1.5'
+                        href={fullMapUrl.toString()}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                    >
+                        Karte in voller Größe anzeigen
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            viewBox='0 0 20 20'
+                            fill='currentColor'
+                            class='w-3.5 h-3.5 inline-block -mt-0.5'
+                            aria-hidden='true'
+                        >
+                            <path
+                                fill-rule='evenodd'
+                                d='M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z'
+                                clip-rule='evenodd'
+                            />
+                            <path
+                                fill-rule='evenodd'
+                                d='M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z'
+                                clip-rule='evenodd'
+                            />
+                        </svg>
+                        <span class='sr-only'>(opens in new window)</span>
+                    </a>
+                </footer>
+            </>
+        ) : (
+            <div class='h-96 bg-gray-50 flex items-center justify-center'>
+                <p class='text-red-600 font-medium'>Invalid map coordinates</p>
+            </div>
+        )
+    }
+</div>
