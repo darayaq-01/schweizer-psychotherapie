@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
-import ImgeEirka from '@assets/avatar.webp';
+import ImgeEirka from '@assets/erika.webp';
 import Container from '@components/Container.astro';
 ---
 
@@ -11,7 +11,11 @@ import Container from '@components/Container.astro';
         className='flex flex-col md:flex-row ms-5'
     >
         <figure class='py-4'>
-            <Image src={ImgeEirka} alt='image' class='mx-auto w-[70%] h-auto' />
+            <Image
+                src={ImgeEirka}
+                alt='image'
+                class='mx-auto w-[70%] h-auto aspect-auto'
+            />
         </figure>
         <div class='prose'>
             <p>
