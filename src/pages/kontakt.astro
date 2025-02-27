@@ -2,10 +2,11 @@
 import Layout from '@layouts/Layout.astro';
 import Container from '@components/Container.astro';
 import Form from '@components/Form.astro';
-import OSMap from '@components/OSMap.astro';
+import LeafletMap from '@components/LeafletMap.astro';
 
 const STORE_COORDINATES: [number, number] = [48.07017, 11.604019];
 // Adress: Professor-Huber-Straße 1, 82008 Unterhaching
+const mapZoom = 16;
 ---
 
 <Layout title='Kontakt' description='Erika Schweizer - Psychoterapeuten'>
@@ -56,10 +57,11 @@ const STORE_COORDINATES: [number, number] = [48.07017, 11.604019];
                 </li>
             </ul>
         </article>
-        <OSMap
+
+        <LeafletMap
             coordinates={STORE_COORDINATES}
-            zoom={8}
-            containerClass='max-w-4xl my-12'
+            zoom={mapZoom}
+            containerClass='max-w-2xl my-8'
         />
     </Container>
 </Layout>
