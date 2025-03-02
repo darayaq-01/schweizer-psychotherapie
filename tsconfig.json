@@ -18,9 +18,6 @@
       "@content/*": [
         "src/content/*"
       ],
-      "@constants/*": [
-        "src/constants/*"
-      ],
       "@components/*": [
         "src/components/*"
       ],
@@ -30,18 +27,24 @@
       "@layouts/*": [
         "src/layouts/*"
       ],
-      "@lib/*": [
-        "src/lib/*"
-      ],
       "@pages/*": [
         "src/pages/*"
       ],
+      "@constants/*": [
+        "src/lib/constants/*"
+      ],
+      "@helpers/*": [
+        "src/lib/helpers/*"
+      ],
       "@utils/*": [
-        "src/utils/*"
+        "src/lib/utils/*"
       ],
       "@styles/*": [
         "src/styles/*"
-      ]
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
     }
   }
 }
