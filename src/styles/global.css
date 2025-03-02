@@ -12,12 +12,9 @@
   }
 }
 
-@layer components {
-
-}
-
 @layer utilities {
-  .prose h2 {
+  .prose 
+    h2 {
     color: var(--color-es-logo-primary);
   }
 }
