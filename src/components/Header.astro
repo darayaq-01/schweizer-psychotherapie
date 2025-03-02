@@ -2,12 +2,24 @@
 import { Image } from 'astro:assets';
 import HeaderLink from './HeaderLink.astro';
 import Logo from '@assets/logo/logo.webp';
+import HamburguerMenu from './HamburguerMenu.astro';
+import HeaderMobileMenu from './HeaderMobileMenu.astro';
 
-const menusItems = [
+interface MenuItem {
+    href?: string;
+    text: string;
+    isDropdown?: boolean;
+    items?: Array<{
+        text: string;
+        href: string;
+    }>;
+}
+
+const menusItems: MenuItem[] = [
     { href: '/ueber-mich', text: 'Über mich' },
     {
         text: 'Leistungen',
-        isDropdown: true, // Agregamos esta propiedad para identificar dropdowns
+        isDropdown: true,
         items: [
             { text: 'Leistungen 1', href: '/leistungen/#leistungen1' },
             { text: 'Leistungen 2', href: '/leistungen/#leistungen2' },
@@ -20,16 +32,20 @@ const menusItems = [
 const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
 ---
 
+<HeaderMobileMenu id='header-menu' links={menusItems} class='hidden' />
 <header>
-    <nav class='flex flex-col'>
-        <a href='/ueber-mich' aria-label='Züruck zur Startseite'>
+    <nav class='flex justify-between align-baseline md:flex-col mb-6 md:mb-0'>
+        <a href='/ueber-mich' aria-label='Züruck zur Startseite' class='w-fit'>
             <Image
                 src={Logo || '/placeholder.svg'}
                 alt='Logo'
-                class='aspect-auto object-cover h-32 w-auto'
+                class='aspect-auto object-cover h-14 md:h-32 w-auto'
             />
         </a>
 
+        <div class='md:hidden flex flex-col self-center'>
+            <HamburguerMenu id='hamburger-btn' />
+        </div>
         <div
             class='md:flex hidden flex-col md:flex-row gap-8 border-es-primary border-y py-2 my-8'
         >
@@ -52,7 +68,7 @@ const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
 
                             <div class='hidden group-hover:block absolute top-full left-0 bg-white shadow-lg min-w-[200px] z-50'>
                                 <div class='py-2'>
-                                    {item.items.map((subItem) => (
+                                    {item.items?.map((subItem) => (
                                         <HeaderLink
                                             href={subItem.href}
                                             class='block px-6 py-2 text-es-gray hover:text-es-primary hover:underline hover:underline-offset-8'
@@ -71,5 +87,24 @@ const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
                 )
             }
         </div>
+
+        <script>
+            const hamburgerMenu =
+                document.querySelector<HTMLButtonElement>('#hamburger-btn')!;
+            const headerMenuElement =
+                document.querySelector<HTMLButtonElement>('#header-menu')!;
+
+            hamburgerMenu.onclick = () => {
+                hamburgerMenu.setAttribute(
+                    'aria-expanded',
+                    hamburgerMenu.getAttribute('aria-expanded') === 'true'
+                        ? 'false'
+                        : 'true'
+                );
+                headerMenuElement.classList.toggle('is-active');
+                document.body.classList.toggle('no-scroll');
+                headerMenuElement.classList.toggle('hidden');
+            };
+        </script>
     </nav>
 </header>
