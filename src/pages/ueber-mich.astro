@@ -1,21 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
-import ImgeEirka from '@assets/erika.webp';
+import ImgEirka from '@assets/erika.webp';
 import Container from '@components/Container.astro';
 ---
 
 <Layout title='Über mich' description='Erika Schweizer - Psychoterapeuten'>
     <Container
         title='Lorem upsum dolor sir emet'
-        className='flex flex-col md:flex-row ms-5'
+        className='flex flex-col md:flex-row'
     >
-        <figure class='py-4'>
-            <Image
-                src={ImgeEirka}
-                alt='image'
-                class='mx-auto w-[70%] h-auto aspect-auto'
-            />
+        <figure class='aspect-auto xl:max-w-80'>
+            <Image src={ImgEirka} alt='image' class='object-cover' />
         </figure>
         <div class='prose'>
             <p>
