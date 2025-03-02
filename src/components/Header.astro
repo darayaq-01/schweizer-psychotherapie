@@ -1,21 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import HeaderLink from './HeaderLink.astro';
 import Logo from '@assets/logo/logo.webp';
+import HeaderLink from './HeaderLink.astro';
 import HamburguerMenu from './HamburguerMenu.astro';
 import HeaderMobileMenu from './HeaderMobileMenu.astro';
+import { type MenuItem } from '../types/global.ts';
 
-interface MenuItem {
-    href?: string;
-    text: string;
-    isDropdown?: boolean;
-    items?: Array<{
-        text: string;
-        href: string;
-    }>;
-}
-
-const menusItems: MenuItem[] = [
+// TODO split to a separate file
+const menuItems: MenuItem[] = [
     { href: '/ueber-mich', text: 'Über mich' },
     {
         text: 'Leistungen',
@@ -29,10 +21,11 @@ const menusItems: MenuItem[] = [
     },
     { href: '/kontakt', text: 'Kontakt' },
 ];
+
 const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
 ---
 
-<HeaderMobileMenu id='header-menu' links={menusItems} class='hidden' />
+<HeaderMobileMenu id='header-menu' links={menuItems} class='hidden' />
 <header>
     <nav class='flex justify-between align-baseline md:flex-col mb-6 md:mb-0'>
         <a href='/ueber-mich' aria-label='Züruck zur Startseite' class='w-fit'>
@@ -46,27 +39,28 @@ const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
         <div class='md:hidden flex flex-col self-center'>
             <HamburguerMenu id='hamburger-btn' />
         </div>
+
         <div
             class='md:flex hidden flex-col md:flex-row gap-8 border-es-primary border-y py-2 my-8'
         >
             {
-                menusItems.map((item) =>
+                menuItems.map((item) =>
                     item.isDropdown ? (
                         <div class='relative group'>
                             <button
-                                class:list={[
-                                    'text-lg uppercase focus:outline-none transition-colors',
-                                    'text-es-gray hover:text-es-primary',
-                                    {
-                                        'text-es-primary':
-                                            isInLeistungenSection,
-                                    },
-                                ]}
+                                class={`text-lg uppercase focus:outline-none transition-colors 
+                                       text-es-gray hover:text-es-primary
+                                       ${isInLeistungenSection ? 'text-es-primary' : ''}`}
+                                aria-expanded='false'
+                                aria-haspopup='true'
                             >
                                 {item.text}
                             </button>
 
-                            <div class='hidden group-hover:block absolute top-full left-0 bg-white shadow-lg min-w-[200px] z-50'>
+                            <div
+                                class='hidden group-hover:block absolute top-full left-0 bg-white shadow-lg min-w-[200px] z-50'
+                                role='menu'
+                            >
                                 <div class='py-2'>
                                     {item.items?.map((subItem) => (
                                         <HeaderLink
@@ -87,24 +81,7 @@ const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
                 )
             }
         </div>
-
-        <script>
-            const hamburgerMenu =
-                document.querySelector<HTMLButtonElement>('#hamburger-btn')!;
-            const headerMenuElement =
-                document.querySelector<HTMLButtonElement>('#header-menu')!;
-
-            hamburgerMenu.onclick = () => {
-                hamburgerMenu.setAttribute(
-                    'aria-expanded',
-                    hamburgerMenu.getAttribute('aria-expanded') === 'true'
-                        ? 'false'
-                        : 'true'
-                );
-                headerMenuElement.classList.toggle('is-active');
-                document.body.classList.toggle('no-scroll');
-                headerMenuElement.classList.toggle('hidden');
-            };
-        </script>
     </nav>
 </header>
+
+<script src='@utils/header-menu.js'></script>
