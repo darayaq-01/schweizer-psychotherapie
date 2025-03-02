@@ -1,0 +1,89 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import HeaderLink from './HeaderLink.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+    links: MenuItem[];
+}
+
+interface MenuItem {
+    href?: string;
+    text: string;
+    isDropdown?: boolean;
+    items?: Array<{
+        text: string;
+        href: string;
+    }>;
+}
+const isInLeistungenSection = Astro.url.pathname.includes('/leistungen');
+
+const { links, class: className, ...rest } = Astro.props;
+---
+
+<div
+    class='header-transition absolute right-0 p-36 top-0 z-50 shadow-lg h-full w-fit bg-es-white'
+    class:list={[className]}
+    id='header-menu'
+    {...rest}
+>
+    <div
+        id='menu-content'
+        class='flex flex-col opacity-0 transition-opacity duration-200 ease-in'
+    >
+        <ul class='flex flex-col space-y-4 gap-6'>
+            {
+                links.map((item) =>
+                    item.isDropdown ? (
+                        <div class='relative group'>
+                            <button
+                                class:list={[
+                                    'focus:outline-none transition-colors text-2xl text-pretty uppercase',
+                                    'text-es-gray hover:text-es-primary',
+                                    {
+                                        'text-es-primary':
+                                            isInLeistungenSection,
+                                    },
+                                ]}
+                            >
+                                {item.text}
+                            </button>
+
+                            <div class='hidden group-hover:block absolute top-full left-0 bg-white shadow-lg min-w-[200px] z-50 gap-3'>
+                                <div class='py-2 flex flex-col'>
+                                    {item.items?.map((subItem) => (
+                                        <HeaderLink
+                                            href={subItem.href}
+                                            class='block px-6 py-2 text-es-gray hover:text-es-primary hover:underline hover:underline-offset-8'
+                                        >
+                                            {subItem.text}
+                                        </HeaderLink>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <HeaderLink
+                            href={item.href}
+                            class='text-2xl text-pretty uppercase'
+                        >
+                            {item.text}
+                        </HeaderLink>
+                    )
+                )
+            }
+        </ul>
+    </div>
+</div>
+<style>
+    #header-menu.is-active {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    #header-menu.is-active #menu-content {
+        opacity: 1;
+    }
+
+    .header-transition {
+        transition: transform cubic-bezier(0.9, 0.07, 0.45, 0.94) 0.65s;
+    }
+</style>
