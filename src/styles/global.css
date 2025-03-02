@@ -16,6 +16,12 @@
 
 }
 
+@layer utilities {
+  .prose h2 {
+    color: var(--color-es-logo-primary);
+  }
+}
+
 @theme {
   --color-es-logo-primary: #41758a;
   --color-es-logo-secondary: rgb(198,172,147);
