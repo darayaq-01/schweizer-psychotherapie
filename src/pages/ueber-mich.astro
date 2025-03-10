@@ -8,10 +8,14 @@ import Container from '@components/Container.astro';
 <Layout title='Über mich' description='Erika Schweizer - Psychoterapeuten'>
     <Container
         title='Lorem upsum dolor sir emet'
-        className='flex flex-col md:flex-row xl:max-w-svw'
+        className='flex flex-col md:flex-row justify-start xl:max-w-svw '
     >
         <figure class='aspect-auto justify-start'>
-            <Image src={ImgEirka} alt='image' class='object-cover flex-1' />
+            <Image
+                src={ImgEirka}
+                alt='image'
+                class='object-cover w-full lg:max-w-72 flex-1'
+            />
         </figure>
         <div class='prose'>
             <p>
