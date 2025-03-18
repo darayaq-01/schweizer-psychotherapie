@@ -3,41 +3,60 @@ import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
 import ImgEirka from '@assets/erika.webp';
 import Container from '@components/Container.astro';
+
+const response = await fetch('https://graphql.datocms.com/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+    },
+    body: JSON.stringify({
+        query: `query Homepage {
+            ueberMich {
+                title,
+                 aboutUs {
+                    value 
+                    },
+                imageAboutMe {
+                  id
+                  url
+                  alt
+                }
+            }
+          }
+      `,
+    }),
+});
+
+const json = await response.json();
+const data = json.data.ueberMich;
+const text = json.data.ueberMich.aboutUs.value.document.children.map(
+    (item: { children: { value: any }[] }) => {
+        return item.children[0].value;
+    }
+);
 ---
 
 <Layout title='Über mich' description='Erika Schweizer - Psychoterapeuten'>
     <Container
-        title='Lorem upsum dolor sir emet'
+        title={data.title}
         className='flex flex-col md:flex-row justify-start xl:max-w-svw '
     >
         <figure class='aspect-auto justify-start'>
             <Image
-                src={ImgEirka}
-                alt='image'
+                src={data.imageAboutMe.url}
+                inferSize={true}
+                alt={data.imageAboutMe.alt}
                 class='object-cover w-full lg:max-w-72 flex-1'
             />
         </figure>
         <div class='prose'>
-            <p>
-                Herzlich Willkommen At aboritatem rem voluptam quis sit laut
-                voluptatur, omnis ipsa per oritas molorro repero quo comnis ius,
-                quia dolorest, Itatur, aut officit, simpe nost, ad mi, nonseque
-                nullaute nonse ipsame nonem volecus.
-            </p>
-            <p>
-                Ximus quaecul latios et et omnis si sum quam int volorum seque
-                veliatiur? Anda et que rerum es dis illibus, ut laborem. Ipsaern
-                atenti nonsequi dolo vel eliaectum et acerrovit, comniae labo.
-                At rehent imus.
-            </p>
-            <p>
-                Omnitae et ent et maximus, et ma doluptur maio. Olupti aut reium
-                cusdae pres re volo- ris et ellissim quia del mo ipsam, sant
-                facea volor molorep tatat. Ut vel ipsunt dolupturibus dit lamus
-                sam imagniae velitatum vero ma voluptionse pa- ruptatibus
-                expediaspedi cuptur maiorem qui ullam, quam fugiat ersped
-                molorpos aut
-            </p>
+            {
+                text.map((item: unknown) => {
+                    return <p>{item}</p>;
+                })
+            }
         </div>
     </Container>
 </Layout>
