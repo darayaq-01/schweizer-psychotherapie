@@ -9,13 +9,13 @@ import { homepageQuery } from '@api/querys';
 
 const json = await fetchDatoCMS(homepageQuery);
 const data = json.data.ueberMich;
-const text = extractText(json);
+const text = extractText(json, 'ueberMich.aboutUs');
 ---
 
 <Layout title='Über mich' description='Erika Schweizer - Psychoterapeuten'>
     <Container
         title={data.title}
-        className='flex flex-col md:flex-row justify-start xl:max-w-svw '
+        className='flex flex-col md:flex-row justify-start xl:max-w-svw'
     >
         <figure class='aspect-auto justify-start'>
             <Image
@@ -28,7 +28,7 @@ const text = extractText(json);
         <div class='prose'>
             {
                 text.map((item: unknown) => {
-                    return <p>{item}</p>;
+                    return <Fragment set:html={item} />;
                 })
             }
         </div>

@@ -1,10 +1,19 @@
 ---
 import Container from '@components/Container.astro';
 import Layout from '@layouts/Layout.astro';
+
+import { fetchDatoCMS } from '@api/fetchDatoCMS.js';
+import { extractText } from '@utils/extractText.js';
+import { impressumQuery } from '@api/querys';
+import RenderText from '@components/RenderText.astro';
+
+const json = await fetchDatoCMS(impressumQuery);
+const data = json.data.impressum;
+const text = extractText(json, 'impressum.content');
 ---
 
 <Layout title='Impressum'>
-    <Container className='prose'>
-        <h1>Impressum</h1>
+    <Container className='prose' title={data.title}>
+        <RenderText textEntrie={text} />
     </Container>
 </Layout>
