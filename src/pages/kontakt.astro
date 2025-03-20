@@ -7,55 +7,31 @@ import LeafletMap from '@components/LeafletMap.astro';
 const STORE_COORDINATES: [number, number] = [48.07017, 11.604019];
 // Adress: Professor-Huber-Straße 1, 82008 Unterhaching
 const mapZoom = 16;
+
+import { fetchDatoCMS } from '@api/fetchDatoCMS.js';
+import { extractText } from '@utils/extractText.js';
+import { kontaktQuery } from '@api/querys';
+import RenderText from '@components/RenderText.astro';
+
+const json = await fetchDatoCMS(kontaktQuery);
+const data = json.data.kontakt;
+const text = extractText(json, 'kontakt.mainText');
+const text1 = extractText(json, 'kontakt.secondaryText1');
+const text2 = extractText(json, 'kontakt.secondaryText2');
 ---
 
 <Layout title='Kontakt' description='Erika Schweizer - Psychoterapeuten'>
-    <Container title='Kontakt' className=''>
+    <Container title={data.mainTitle} className=''>
         <article class='prose'>
-            <p>
-                Praxis für Psychotherapie Erika Schweizer Heilpraktikerin für
-                Psychotherapie (HPG)
-            </p>
-            <p>
-                Professor-Huber-Straße 1, 82008 Unterhaching, Tel: 089 18910330,
-                Mail: <a
-                    href='mailto:info@schweizer-psychotherapie.de'
-                    class='underline hover:text-es-logo-primary'
-                >
-                    info@schweizer-psychotherapie.de
-                </a>
-            </p>
+            <RenderText textEntrie={text} />
             <Form />
         </article>
         <article class='prose mt-8'>
-            <h2>Die Anfahrt mit den öffentlichen Verkehrsmitteln:</h2>
-            <p>
-                Praxis für Psychotherapie Erika Schweizer,
-                Professor-Huber-Straße 1, 82008 Unterhaching
-            </p>
-            <p>
-                Die U-Bahnhaltestelle „xxxx“ ist wenige Gehminuten von der
-                Praxis entfernt.
-            </p>
-            <ul>
-                <li>U-Bahn Linie Ux oder Ux, Haltestelle: xxxx</li>
-                <li>Bus Linie xx, Haltestelle: xxxx</li>
-            </ul>
+            <h2>{data.secondaryTitle1}</h2>
+            <RenderText textEntrie={text1} />
 
-            <p>www.mvv-muenchen.de</p>
-
-            <h2>Die Anfahrt mit dem Auto:</h2>
-
-            <p>Parkplätze lorem ipsum.</p>
-            <ul>
-                <li>
-                    vero ma voluptionse paruptatibus expediaspedi cuptur maiorem
-                </li>
-                <li>
-                    qui ullam, quam fugiat ersped molorpos aut la pliqui blaut
-                    dolestis deriaturepe
-                </li>
-            </ul>
+            <h2>{data.secondaryTitle2}</h2>
+            <RenderText textEntrie={text2} />
         </article>
 
         <LeafletMap

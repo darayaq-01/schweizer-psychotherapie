@@ -1,0 +1,9 @@
+---
+const { textEntrie } = Astro.props;
+---
+
+{
+    textEntrie.map((item: unknown) => {
+        return <Fragment set:html={item} />;
+    })
+}

@@ -1,10 +1,18 @@
 ---
 import Container from '@components/Container.astro';
 import Layout from '@layouts/Layout.astro';
+import { fetchDatoCMS } from '@api/fetchDatoCMS.js';
+import { extractText } from '@utils/extractText.js';
+import { datenschutzQuery } from '@api/querys';
+import RenderText from '@components/RenderText.astro';
+
+const json = await fetchDatoCMS(datenschutzQuery);
+const data = json.data.datenschutz;
+const text = extractText(json, 'datenschutz.content');
 ---
 
-<Layout title='Datenschutz'>
-    <Container className='prose'>
-        <h1>Datenschutz</h1>
+<Layout title='Impressum'>
+    <Container className='prose' title={data.title}>
+        <RenderText textEntrie={text} />
     </Container>
 </Layout>

@@ -1,102 +1,34 @@
 ---
 import Container from '@components/Container.astro';
 import Layout from '@layouts/Layout.astro';
+
+import { fetchDatoCMS } from '@api/fetchDatoCMS.js';
+import { extractText } from '@utils/extractText.js';
+import { leistungenQuery } from '@api/querys';
+import RenderText from '@components/RenderText.astro';
+
+const json = await fetchDatoCMS(leistungenQuery);
+const data = json.data.leistungen;
+
+const text = extractText(json, 'leistungen.mainText');
+const text1 = extractText(json, 'leistungen.text1');
+const text2 = extractText(json, 'leistungen.text2');
+const text3 = extractText(json, 'leistungen.text3');
+const text4 = extractText(json, 'leistungen.text4');
 ---
 
 <Layout title='Leistungen' description='Erika Schweizer - Psychoterapeuten'>
-    <Container title='Leistungen' className='flex flex-col gap-4'>
+    <Container title={data.title} className='flex flex-col gap-4'>
         <div class='prose'>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                malesuada, nunc nec lacinia ultricies, nunc sapien ultricies
-                sapien, nec ultricies nunc sapien nec
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <h2 id='leistungen1'>Leistungen 1</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <h2 id='leistungen2'>Leistungen 2</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <h2 id='leistungen3'>Leistungen 3</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
-            <h2 id='leistungen4'>Leistungen 4</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p><p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-                est ab mollitia tempora deserunt repellendus maxime sapiente
-                dolore, inventore eligendi, rem quam repudiandae. Accusamus
-                quidem quam voluptatem nostrum adipisci optio?
-            </p>
+            <RenderText textEntrie={text} />
+            <h2 id='leistungen1'>{data.secondaryTitle1}</h2>
+            <RenderText textEntrie={text1} />
+            <h2 id='leistungen2'>{data.secondaryTitle2}</h2>
+            <RenderText textEntrie={text2} />
+            <h2 id='leistungen3'>{data.secondaryTitle3}</h2>
+            <RenderText textEntrie={text3} />
+            <h2 id='leistungen4'>{data.secondaryTitle4}</h2>
+            <RenderText textEntrie={text4} />
         </div>
     </Container>
 </Layout>
